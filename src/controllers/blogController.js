@@ -23,3 +23,14 @@ export const createPost = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getPosts = async (req, res) => {
+  try {
+    const posts = await Blog.findAll({
+      order: [["createdAt", "DESC"]],
+    });
+    return res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

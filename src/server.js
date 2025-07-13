@@ -3,10 +3,12 @@ import { Sequelize } from "sequelize";
 import config from "./config/database.js";
 import Blog from "./models/Blog.js";
 import blogRoute from "./routes/blogRoute.js";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const sequelize = new Sequelize(config);
 Blog.init(sequelize);
