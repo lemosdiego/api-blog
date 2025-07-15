@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development node --watch src/server.js",
-    "start": "NODE_ENV=production node src/server.js"
+    "dev": "dotenv -e .env.local -- cross-env NODE_ENV=development node --watch src/server.js",
+    "start": "dotenv -e .env -- cross-env NODE_ENV=production node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,9 @@
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^8.0.0"
   }
 }
