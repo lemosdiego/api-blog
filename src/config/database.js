@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 const envFile = process.env.NODE_ENV === "development" ? ".env.local" : ".env";
 dotenv.config({ path: envFile });
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export default {
   dialect: "postgres",
   host: process.env.DB_HOST,
@@ -15,4 +17,12 @@ export default {
     underscored: true,
     underscoredAll: true,
   },
+  dialectOptions: isProduction
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : {},
 };
