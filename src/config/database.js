@@ -1,32 +1,28 @@
 import dotenv from "dotenv";
-
-const envFile = process.env.NODE_ENV === "development" ? ".env.local" : ".env";
-dotenv.config({ path: envFile });
+dotenv.config({
+  path: process.env.NODE_ENV === "development" ? ".env.local" : ".env",
+});
 
 const isProduction = process.env.NODE_ENV === "production";
 
 export default {
   dialect: "postgres",
-  ...(isProduction
-    ? {
-        use_env_variable: "DATABASE_URL",
-        dialectOptions: {
-          ssl: {
-            require: true,
-            rejectUnauthorized: false,
-          },
-        },
-      }
-    : {
-        host: process.env.DB_HOST,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,
-      }),
+  host: process.env.DB_HOST,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
   define: {
     timestamps: true,
     underscored: true,
     underscoredAll: true,
   },
+  dialectOptions: isProduction
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : {},
 };
